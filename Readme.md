@@ -1,4 +1,6 @@
-# 
+# FoClASS
+
+![Foclass logo](static/Foclass_logo.png)
 
 Classification of stable states from Boolean Network according to Signature by Formal Concept Analysis
 
