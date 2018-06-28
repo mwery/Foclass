@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-""" 
+"""
     Used if some input environment are given and we want to keep it into the value
     Take for argument the GINsim result file and make two matrix :
     One with 0* or 1* depending on the mutation (matricemutantStar)
@@ -98,7 +98,10 @@ def readGINsimNetworkMutant(fileName, folder):
     #print(ginsimotif)
     ginsimvers=glob.glob(ginsimotif)
     #print(ginsimvers)
-    os.system("java -jar %s -s ./scripts/ginsim/FindStableStateInput.py %s > %s" %(ginsimvers[0], fileName, fileResult))
+    os.system("java -cp %s:scripts/extensions/jython-standalone-2.7.0.jar org.ginsim.Launcher -s ./scripts/ginsim/FindStableStateInput.py %s > %s" %(ginsimvers[0], fileName, fileResult))
+    os.system("sed -e '1!b' -e '/Jython is available/!d' %s" %(fileResult))
+
+
     list_mutant = []
     dict_state = {}
     list_prot = []
@@ -136,7 +139,7 @@ def readGINsimNetworkMutant(fileName, folder):
     #writeMatrixStar(list_prot, dict_state, folder)
     writeMatrixFull(list_prot, list_mutant, dict_state, folder)
 
-    
+
 #                        next_lineIL12out=next_line[:indexIL12]+next_line[indexIL12+1:]
 #                    for elem in list_prot:
 #                        if elem=="IL12":

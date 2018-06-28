@@ -31,9 +31,10 @@ for sp in simparam:
         input_1 = str(ins.getMaxValueTable())
         input_2 = input_1.strip('{}').split(', ')
         for elem in input_2:
-            compound = elem.split('=')[0]
-            valeur = elem.split('=')[1].strip('[]')
-            #print(compound)
+            compound = elem.split(':')[0]
+            valeur = elem.split(':')[1].strip(' []')
+            # print(compound)
+            # print(valeur)
             if valeur == '1':
                 l.append(compound)
         print(l)

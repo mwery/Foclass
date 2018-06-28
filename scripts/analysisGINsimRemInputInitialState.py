@@ -100,9 +100,9 @@ def analysisInput(fileName, folder):
 	#path=os.getcwd()
 	ginsimotif=path+'scripts/'+"GINsim-*.jar"
 	ginsimvers=glob.glob(ginsimotif)
-	print(ginsimvers)
-	os.system("java -cp %s:scripts/extensions/jython-standalone-2.7.0.jar org.ginsim.Launcher -s ./scripts/ginsim/FindAttractors.py %s -> %s" %(ginsimvers[0], fileName, fileResult))
-	sys.exit()
+	#print(ginsimvers)
+	os.system("java -cp %s:scripts/extensions/jython-standalone-2.7.0.jar org.ginsim.Launcher -s ./scripts/ginsim/FindAttractors.py %s > %s" %(ginsimvers[0], fileName, fileResult))
+    os.system("sed '0,/Jython is available/ d' %s" %(fileResult))
     #os.system("java -jar %s -s ./scripts/ginsim/FindAttractors.py %s -> %s" %(ginsimvers[0], fileName, fileResult))
 	dict_state = {}
 	list_prot = []

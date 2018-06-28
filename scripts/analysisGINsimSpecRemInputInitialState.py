@@ -1,9 +1,9 @@
 #! /usr/bin/env python3
 """
-    Used if some input environment AND initialStates are given and we want to remove input from the value
-    Take for argument the GINsim result file and make two matrix :
-    One with 0* or 1* depending on the mutation (matricemutantStar)
-    One with in header name of protein + name of mutations (matricemutantFullTab)
+	Used if some input environment AND initialStates are given and we want to remove input from the value
+	Take for argument the GINsim result file and make two matrix :
+	One with 0* or 1* depending on the mutation (matricemutantStar)
+	One with in header name of protein + name of mutations (matricemutantFullTab)
 @author : Meline WERY
 """
 
@@ -103,8 +103,8 @@ def analysisInput(fileName, folder):
 	ginsimotif=path+'scripts/'+"GINsim-*.jar"
 	ginsimvers=glob.glob(ginsimotif)
 	#print(ginsimvers)
-	os.system("java -jar %s -s ./scripts/ginsim/FindAttractorsInput.py %s -> %s" %(ginsimvers[0], fileName, fileResult))
-
+	os.system("java -cp %s:scripts/extensions/jython-standalone-2.7.0.jar org.ginsim.Launcher -s ./scripts/ginsim/FindAttractorsInput.py %s > %s" %(ginsimvers[0], fileName, fileResult))
+	os.system("sed -i '0,/Jython is available/ d' %s" %(fileResult))
 	dict_state = {}
 	dict_input = {}
 	list_prot = []

@@ -66,11 +66,11 @@ def extractHybrid2(dict_hybrid, list_fixpoint, list_signature, dico):
                     # To maintain the overlap, comment the 4 next lines
                     #print(new_hybrid_signature)
                     #print(new_hybrid)
-                    # curr_hybrid = [x for x in dict_hybrid[hybrid_sign] if x not in new_hybrid]
-                    # new_dict[hybrid_sign] =  curr_hybrid
-                    #
-                    # new_canon = [x for x in dico[list_signature[j]] if x not in new_hybrid]
-                    # dico[list_signature[j]] =  new_canon
+                    curr_hybrid = [x for x in dict_hybrid[hybrid_sign] if x not in new_hybrid]
+                    new_dict[hybrid_sign] =  curr_hybrid
+
+                    new_canon = [x for x in dico[list_signature[j]] if x not in new_hybrid]
+                    dico[list_signature[j]] =  new_canon
 
                     if set(new_hybrid_signature.split(',')) not in hybrid_read :
                         new_dict[new_hybrid_signature] = new_hybrid
@@ -108,11 +108,11 @@ def extractHybride(dico):
                         hybrid_read.append(set(hybrid_signature.split(',')))
 
                         # To maintain the overlap, comment the 4 next lines
-                        # current_lst = [x for x in dico[list_signature[i]] if x not in hybrid]
-                        # dico[list_signature[i]] =  current_lst
-                        #
-                        # tst_lst = [x for x in dico[list_signature[j]] if x not in hybrid]
-                        # dico[list_signature[j]] =  tst_lst
+                        current_lst = [x for x in dico[list_signature[i]] if x not in hybrid]
+                        dico[list_signature[i]] =  current_lst
+
+                        tst_lst = [x for x in dico[list_signature[j]] if x not in hybrid]
+                        dico[list_signature[j]] =  tst_lst
     #print(dict_hybrid)
     all_hybrid, dico = extractHybrid2(dict_hybrid, list_fixpoint, list_signature, dico)
     #print(all_hybrid)

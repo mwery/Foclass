@@ -130,8 +130,8 @@ for sp in simul_parameters:
         input_1 = str(ins.getMaxValueTable())
         input_2 = input_1.strip('{}').split(', ')
         for elem in input_2:
-            proteine = elem.split('=')[0]
-            valeur = elem.split('=')[1].strip('[]')
+            proteine = elem.split(':')[0]
+            valeur = elem.split(':')[1].strip('[]')
             if valeur == '1':
                 dico_input[name_input].append(proteine)
 

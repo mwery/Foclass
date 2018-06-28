@@ -1,0 +1,110 @@
+#infodiv {
+	float:left;
+	width: 20em;
+	height: 100%;
+	border-right: solid;
+}
+
+#container {
+/*	
+	border: solid;
+	border-width:1px;
+*/
+	width: auto;
+	height: 100%;
+	/* float:left;*/
+}
+
+#clearer {
+	clear: both;
+}
+#footer {
+	border-top:solid;
+	border-width: 1px;
+	clear:both;
+	margin-top: 1em;
+}
+
+#edgeinfo div {
+	margin-left: .2em;
+	margin-bottom: 1em;
+	padding: .5em;
+	border-left: solid;
+}
+
+table {
+	border-collapse:collapse
+}
+
+table td, table th {
+	border:1px solid black;
+}
+
+td table {
+	width: 100%;
+}
+
+.comment {
+	height: 100%;
+	padding: .3em;
+	background: #eee;
+}
+
+.regulators {
+	padding: .3em;
+	margin-top: .5em;
+	background: #ddd;
+}
+
+
+.banner {
+    position: relative;
+    padding-top: .3em;
+    padding-left: .1em;
+}
+.banner nav {
+   text-align: right;
+   display: inline-block;
+   position:absolute;
+   right: 0;
+   bottom:0;
+}
+
+.banner span {
+    display: inline-block;
+    padding: .4em .3em;
+    margin: 0;
+    font-weight: bold;
+}
+
+.banner span.title, .banner span.title:hover {
+    display: inline-block;
+    margin: .5em;
+    font-weight: 100;
+    font-size: 2em;
+}
+
+.banner {
+    border-bottom: 12px solid black;
+}
+
+.banner span {
+    background-color: #888;
+}
+
+.banner span.active {
+    background-color:#05a;
+    background-color: black;
+}
+
+.banner a, .banner a:active, .banner a:visited, .banner a:hover { color: white; }
+.banner span:hover  { color: #05a; }
+
+#sigma-container {
+    width: 40em;
+    height: 20em;
+    border: solid 1px red;
+    float: right;
+}
+
+
