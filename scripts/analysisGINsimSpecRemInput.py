@@ -1,9 +1,9 @@
 #! /usr/bin/env python3
 """
-    Used if some input environment are given and we want to remove them from the value
-    Take for argument the GINsim result file and make two matrix :
-    One with 0* or 1* depending on the mutation (matricemutantStar)
-    One with in header name of protein + name of mutations (matricemutantFullTab)
+	Used if some input environment are given and we want to remove them from the value
+	Take for argument the GINsim result file and make two matrix :
+	One with 0* or 1* depending on the mutation (matricemutantStar)
+	One with in header name of protein + name of mutations (matricemutantFullTab)
 @author : Meline WERY
 """
 
@@ -16,7 +16,7 @@ import sys
 def writeMatrixStar(list_prot, dict_state, index, folder):
 	""" Write matrix with [0-9]* depending on mutation """
 
-	with open(folder+"/matricemutantStar.csv", 'w') as csvfile:
+	with open(folder+"/matricemutant.csv", 'w') as csvfile:
 		f_out = csv.writer(csvfile, delimiter=',')
 		header = [value for pos, value in enumerate(list(list_prot)) if pos not in	 index]
 		#header = list(list_prot)
@@ -51,12 +51,11 @@ def writeMatrixStar(list_prot, dict_state, index, folder):
 def writeMatrixFull(list_prot,list_mutant,  dict_state, dict_input, index, folder):
 	""" Write matrix where columns are the protein name + mutation name """
 
-	input_file = open(folder+"/Inputs_FP.tsv", 'w')
-
+	input_file = open(folder+"/Inputs_SS.tsv", 'w')
 	header_input = "Name\tInputs"
 	input_file.write(header_input+'\n')
 
-	with open(folder+"/matricemutantFullTab.csv", 'w') as csvfile:
+	with open(folder+"/matriceFull.csv", 'w') as csvfile:
 		f_out = csv.writer(csvfile, delimiter=',')
 		header = [value for pos, value in enumerate(list(list_prot)) if pos not in index]
 		header.insert(0, "Name")
@@ -85,6 +84,7 @@ def writeMatrixFull(list_prot,list_mutant,  dict_state, dict_input, index, folde
 			i += 1
 
 			lst_input = [str(x) for x in dict_input[stable_state]]
+			# print(lst_input)
 			input_file.write(pheno+'\t'+','.join(lst_input)+'\n')
 		input_file.close()
 
@@ -92,7 +92,7 @@ def analysisInput(fileName, folder):
 	""" From GINsim result file to dictionnary (stable_state, mutation_name) """
 
 	path = os.path.dirname(fileName)
-	fileResult=folder+"/mutant"+str(fileName[:-6])+"txt"
+	fileResult=folder+"/SS_"+str(fileName[:-6])+"txt"
 #	fileName=(list(file))[0]
 #	fileResult="mutant"+str(fileName[:-6])+"txt"
 	#En dehors de Snakemake, file != de <class 'snakemake.io.InputFiles'>
@@ -103,7 +103,12 @@ def analysisInput(fileName, folder):
 	ginsimotif=path+'scripts/'+"GINsim-*.jar"
 	ginsimvers=glob.glob(ginsimotif)
 	#print(ginsimvers)
-	os.system("java -jar %s -s ./scripts/ginsim/FindStableStateInput.py %s -> %s" %(ginsimvers[0], fileName, fileResult))
+	cmd = "java -cp %s:scripts/extensions/jython-standalone-2.7.0.jar org.ginsim.Launcher -s ./scripts/ginsim/FindStableStateInput.py %s -> %s" %(ginsimvers[0], fileName, fileResult)
+	# print(cmd)
+	# sys.exit()
+
+	os.system(cmd)
+	os.system("sed -i '0,/Jython is available/ d' %s" %(fileResult))
 
 	dict_state = {}
 	dict_input = {}
@@ -117,7 +122,8 @@ def analysisInput(fileName, folder):
 				list_prot = line.strip().strip('[]').split(', ')
 				#print(len(list_input))
 				next_line = f_in.readline()
-				list_input = next_line.strip().strip('[]').split(', ')
+				list_input = next_line.strip().strip('[]').strip("'").split(', ')
+				# print(list_input)
 				index = [list_prot.index(inputs) for inputs in list_input if inputs in list_prot]
 #				print(len(list_prot))
 				next_line = f_in.readline()
@@ -125,6 +131,7 @@ def analysisInput(fileName, folder):
 
 				while(next_line):
 					current_input = ast.literal_eval(next_line)
+					# current_input = next_line.strip().strip('[]').split(', ')
 					#print(current_input)
 					#current_input = [list_prot[pos] for pos, value in enumerate(curr_input) if list_prot[pos] in curr_input and int(value) == 1]
 

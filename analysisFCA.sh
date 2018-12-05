@@ -1,21 +1,5 @@
 #!/usr/bin/env bash
 
-# SGE Options
-
-#It's a bash file
-#$ -S /bin/bash
-
-#Job's Name
-#$ -N mel-concept-pyth
-
-#Mail to send informations
-#$ -M meline.wery@irisa.fr
-
-#Options
-#$ -m beas
-
-# Run python3
-#. /softs/local/env/envpython-3.3.2.sh
 usage="Usage: ./analysisFCA.sh -d [Directory] -s [Signature File]\n\n
 
 where:\n
@@ -67,8 +51,8 @@ set -- "${POSITIONAL[@]}" # restore positional parametersr
 
 
 #Data
-protdata=./$Dir/matricemutantProtTab.csv
-mutdata=./$Dir/matricemutantWTKOE1Tab.csv
+context=./$Dir/FormalContext.csv
+mutdata=./$Dir/FormalContextMutationWTKOE1.csv
 #signature=signature_drug.txt
 
 
@@ -77,6 +61,7 @@ mutdata=./$Dir/matricemutantWTKOE1Tab.csv
 #Signature=${2:?"A Signature File is required. Usage: ./analysisFCA.sh [Directory] [Signature File]"}
 #echo "Debut"
 cp $Sign $Dir
-
-python3 ./scripts/class_canoniq_hybrid.py $protdata $mutdata $Dir/$Sign
+echo "Part1"
+python3 ./scripts/class_canoniq_hybrid.py $context $mutdata $Dir/$Sign
+echo "Part2"
 python3 ./scripts/analysisPythResults.py $Dir

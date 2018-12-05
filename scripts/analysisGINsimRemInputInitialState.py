@@ -1,9 +1,9 @@
 #! /usr/bin/env python3
 """
-    Used if we test all combination of inputs and we want to remove them from the value
-    Take for argument the GINsim result file and make two matrix :
-    One with 0* or 1* depending on the mutation (matricemutantStar)
-    One with in header name of protein + name of mutations (matricemutantFullTab)
+	Used if we test all combination of inputs and we want to remove them from the value
+	Take for argument the GINsim result file and make two matrix :
+	One with 0* or 1* depending on the mutation (matricemutantStar)
+	One with in header name of protein + name of mutations (matricemutantFullTab)
 @author : Meline WERY
 """
 
@@ -16,7 +16,7 @@ import sys
 def writeMatrixStar(list_prot, dict_state, index, folder):
 	""" Write matrix with [0-9]* depending on mutation """
 
-	with open(folder+"/matricemutantStar.csv", 'w') as csvfile:
+	with open(folder+"/matricemutant.csv", 'w') as csvfile:
 		f_out = csv.writer(csvfile, delimiter=',')
 		header = [value for pos, value in enumerate(list(list_prot)) if pos not in	 index]
 		#header = list(list_prot)
@@ -50,7 +50,11 @@ def writeMatrixStar(list_prot, dict_state, index, folder):
 def writeMatrixFull(list_prot,list_mutant,  dict_state, index, folder):
 	""" Write matrix where columns are the protein name + mutation name """
 
-	with open(folder+"/matricemutantFullTab.csv", 'w') as csvfile:
+	input_file = open(folder+"/Inputs_SS.tsv", 'w')
+	header_input = "Name\tInputs"
+	input_file.write(header_input+'\n')
+
+	with open(folder+"/matriceFull.csv", 'w') as csvfile:
 		f_out = csv.writer(csvfile, delimiter=',')
 		header = [value for pos, value in enumerate(list(list_prot)) if pos not in index]
 		#header = list(list_prot)
@@ -86,11 +90,15 @@ def writeMatrixFull(list_prot,list_mutant,  dict_state, index, folder):
 			f_out.writerow(list_ss)
 			i += 1
 
+			lst_input = [str(x) for x in dict_input[stable_state]]
+			input_file.write(pheno+'\t'+','.join(lst_input)+'\n')
+		input_file.close()
+
 def analysisInput(fileName, folder):
 	""" From GINsim result file to dictionnary (stable_state, mutation_name) """
 
 	path = os.path.dirname(fileName)
-	fileResult=folder+"/mutant"+str(fileName[:-6])+"txt"
+	fileResult=folder+"/SS_"+str(fileName[:-6])+"txt"
 #	fileName=(list(file))[0]
 #	fileResult="mutant"+str(fileName[:-6])+"txt"
 	#En dehors de Snakemake, file != de <class 'snakemake.io.InputFiles'>
@@ -102,8 +110,8 @@ def analysisInput(fileName, folder):
 	ginsimvers=glob.glob(ginsimotif)
 	#print(ginsimvers)
 	os.system("java -cp %s:scripts/extensions/jython-standalone-2.7.0.jar org.ginsim.Launcher -s ./scripts/ginsim/FindAttractors.py %s > %s" %(ginsimvers[0], fileName, fileResult))
-    os.system("sed '0,/Jython is available/ d' %s" %(fileResult))
-    #os.system("java -jar %s -s ./scripts/ginsim/FindAttractors.py %s -> %s" %(ginsimvers[0], fileName, fileResult))
+	os.system("sed -i '0,/Jython is available/ d' %s" %(fileResult))
+	#os.system("java -jar %s -s ./scripts/ginsim/FindAttractors.py %s -> %s" %(ginsimvers[0], fileName, fileResult))
 	dict_state = {}
 	list_prot = []
 	list_mutant = []

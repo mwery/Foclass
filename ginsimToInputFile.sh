@@ -1,22 +1,5 @@
 #!/bin/bash
 
-# SGE Options
-
-#It's a bash file
-#$ -S /bin/bash
-
-#Job's Name
-#$ -N mel-concept-pyth
-
-#Mail to send informations
-#$ -M meline.wery@irisa.fr
-
-#Options
-#$ -m beas
-
-# Run python3
-#. /softs/local/env/envpython-3.3.2.sh
-
 usage="Usage: ./ginsimToInputFile.sh -d|--directory [Directory] -a|--archive [GINsim Archive] -o|--option [Options]\n\n
 
 where:\n
@@ -83,7 +66,7 @@ set -- "${POSITIONAL[@]}" # restore positional parametersr
 
 
 #Data
-fullfile=$Dir/matricemutantFullTab.csv
+fullfile=$Dir/matriceFull.csv
 # Put your Science related commands here
 #Dir=${1:?"A Directory is required. Usage: ./ginsimToInputFile.sh -d|--directory [Directory] -a|--archive [GINsim Archive] -o|--option [Options]"}
 #Arc=${2:?"A GINsim archive is required. Usage: ./ginsimToInputFile.sh -d|--directory [Directory] -a|--archive [GINsim Archive] -o|--option [Options]"}
@@ -127,4 +110,4 @@ esac
 
 cp $Arc $Dir
 python3 ./scripts/splitFull_KOE1.py $fullfile
-python3 ./matrix_FCA.py $Dir/matricemutantProtTab.csv
+python3 ./matrix_FCA.py $Dir/FormalContext.csv

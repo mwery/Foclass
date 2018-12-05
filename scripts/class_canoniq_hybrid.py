@@ -162,7 +162,7 @@ def readMatrixFCA(file_csv):
 
 
 def readMatrix(file_result):
-    """ From matricemutantWTKOE1 file to a dictionnary (phenotype_name, mutation_name) """
+    """ From FormalContextMutationWTKOE1 file to a dictionnary (phenotype_name, mutation_name) """
 
     dict_state = {}
     with open(file_result, 'r') as f_in:
@@ -215,7 +215,7 @@ def patternMotif(concept, stablestate):
 def writeFinalFile(path, dict_assoc, list_wt, ens_obj):
     """ Write on a file the signature with associated stable states """
 
-    input_file = path+'/Inputs_FP.tsv'
+    input_file = path+'/Inputs_SS.tsv'
     if os.path.isfile(input_file) :
         df_input = pd.read_csv(input_file, sep='\t')
         try:
@@ -381,8 +381,13 @@ def searchVariant(dict_class, list_wt, data_matrix, path):
         matrix = {}
         with open(path+"/Variants/Variant"+sign[0]+".tsv", 'w') as variantFile:
             key = ','.join(sign[1])
-            for obj in dict_class[key]:
-                matrix[obj] = data_matrix[obj]
+            if key in dict_class:
+                for obj in dict_class[key]:
+                    matrix[obj] = data_matrix[obj]
+            else:continue
+
+
+
             sub_concept = dictToConcept(matrix)
             sub_lattice = sub_concept.lattice
             variantFile.write("Number of Variants: " + str(len(sub_lattice)) + "\n")

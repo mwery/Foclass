@@ -44,8 +44,8 @@ if len(sys.argv) == 2:
 current_path = os.getcwd()+'/'+folder
 #print(current_path)
 file = current_path+"/AssociationPheno.txt"
-prot_file = current_path+"/matricemutantProtTab.csv"
-mut_file = current_path+"/matricemutantWTKOE1Tab.csv"
+prot_file = current_path+"/FormalContext.csv"
+mut_file = current_path+"/FormalContextMutationWTKOE1.csv"
 result_folder = current_path+"/AssocResultPython/"
 
 if not os.path.exists(result_folder):

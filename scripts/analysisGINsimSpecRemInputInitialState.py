@@ -16,7 +16,7 @@ import sys
 def writeMatrixStar(list_prot, dict_state, index, folder):
 	""" Write matrix with [0-9]* depending on mutation """
 
-	with open(folder+"/matricemutantStar.csv", 'w') as csvfile:
+	with open(folder+"/matricemutant.csv", 'w') as csvfile:
 		f_out = csv.writer(csvfile, delimiter=',')
 		header = [value for pos, value in enumerate(list(list_prot)) if pos not in	 index]
 		#header = list(list_prot)
@@ -51,12 +51,11 @@ def writeMatrixStar(list_prot, dict_state, index, folder):
 def writeMatrixFull(list_prot,list_mutant,  dict_state, dict_input, index, folder):
 	""" Write matrix where columns are the protein name + mutation name """
 
-	input_file = open(folder+"/Inputs_FP.tsv", 'w')
-
+	input_file = open(folder+"/Inputs_SS.tsv", 'w')
 	header_input = "Name\tInputs"
 	input_file.write(header_input+'\n')
 
-	with open(folder+"/matricemutantFullTab.csv", 'w') as csvfile:
+	with open(folder+"/matriceFull.csv", 'w') as csvfile:
 		f_out = csv.writer(csvfile, delimiter=',')
 		header = [value for pos, value in enumerate(list(list_prot)) if pos not in index]
 		header.insert(0, "Name")
@@ -92,7 +91,7 @@ def analysisInput(fileName, folder):
 	""" From GINsim result file to dictionnary (stable_state, mutation_name) """
 
 	path = os.path.dirname(fileName)
-	fileResult=folder+"/mutant"+str(fileName[:-6])+"txt"
+	fileResult=folder+"/SS_"+str(fileName[:-6])+"txt"
 #	fileName=(list(file))[0]
 #	fileResult="mutant"+str(fileName[:-6])+"txt"
 	#En dehors de Snakemake, file != de <class 'snakemake.io.InputFiles'>
